@@ -62,4 +62,4 @@ lerna-debug.log*
 *.sw?
 
 # Kubernetes Secrets
-k8s/secret.yaml
+k8s/config/secret.yaml

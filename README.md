@@ -156,9 +156,9 @@ A aplicação conta com manifestos completos na pasta `k8s/` para orquestração
    docker build -t gestfarma-frontend:latest ./frontend
    ```
 
-3. **Aplique os manifestos:**
+3. **Aplique os manifestos recursivamente:**
    ```bash
-   kubectl apply -f k8s/
+   kubectl apply -R -f k8s/
    ```
 
 4. **Acesse as aplicações:**
