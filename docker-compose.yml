@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: gestfarma-db
+    restart: always
+    environment:
+      POSTGRES_DB: farmacia
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  backend:
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: gestfarma-backend
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_HOST=db
+      - DB_PORT=5432
+      - DB_NAME=farmacia
+      - DB_USER=postgres
+      - DB_PASSWORD=postgres
+      - JWT_SECRET=2rzuSery6O9JucO5VvseVp8LwxmdghCb0EmUYylD9Fe3Mkf3V/M2Uqy4dqXkUSz4ZIxGaZZRF+h/Hww+umbH2Q==
+    depends_on:
+      - db
+    profiles:
+      - app # O profile "app" faz com que não inicie por padrão, apenas se requisitado
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: gestfarma-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    environment:
+      - VITE_API_BASE_URL=http://localhost:8080
+    depends_on:
+      - backend
+    profiles:
+      - app
+
+volumes:
+  pgdata:
