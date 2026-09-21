@@ -148,12 +148,11 @@ A aplicação conta com manifestos completos na pasta `k8s/` para orquestração
    minikube start
    ```
 
-2. **Aponte o Docker para o Minikube e faça o build das imagens:**
-   Como os manifestos usam `imagePullPolicy: Never`, as imagens precisam estar disponíveis localmente no cluster.
+2. **Faça o build das imagens diretamente no Minikube:**
+   Como os manifestos usam `imagePullPolicy: Never`, as imagens precisam estar disponíveis localmente no cluster. O comando nativo do minikube é mais seguro, pois suporta diferentes runtimes (como containerd):
    ```bash
-   eval $(minikube docker-env)
-   docker build -t gestfarma-backend:latest ./backend
-   docker build -t gestfarma-frontend:latest ./frontend
+   minikube image build -t gestfarma-backend:latest ./backend
+   minikube image build -t gestfarma-frontend:latest ./frontend
    ```
 
 3. **Aplique os manifestos recursivamente:**
