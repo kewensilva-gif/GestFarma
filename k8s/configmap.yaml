@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gestfarma-config
+data:
+  DB_HOST: gestfarma-db
+  DB_PORT: "5432"
+  DB_NAME: farmacia
+  VITE_API_BASE_URL: http://gestfarma-backend:8080

@@ -139,6 +139,37 @@ A SPA estará disponível em `http://localhost:5173`.
 
 ---
 
+## Executando com Kubernetes (Minikube)
+
+A aplicação conta com manifestos completos na pasta `k8s/` para orquestração. Para subir o ambiente:
+
+1. **Inicie o Minikube:**
+   ```bash
+   minikube start
+   ```
+
+2. **Aponte o Docker para o Minikube e faça o build das imagens:**
+   Como os manifestos usam `imagePullPolicy: Never`, as imagens precisam estar disponíveis localmente no cluster.
+   ```bash
+   eval $(minikube docker-env)
+   docker build -t gestfarma-backend:latest ./backend
+   docker build -t gestfarma-frontend:latest ./frontend
+   ```
+
+3. **Aplique os manifestos:**
+   ```bash
+   kubectl apply -f k8s/
+   ```
+
+4. **Acesse as aplicações:**
+   O backend e o frontend estão expostos via `NodePort`. Use o comando abaixo para obter a URL de acesso:
+   ```bash
+   minikube service gestfarma-frontend --url
+   minikube service gestfarma-backend --url
+   ```
+
+---
+
 ## Banco de Dados
 
 O Flyway executa as migrations automaticamente ao iniciar o backend:

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gestfarma-frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gestfarma-frontend
+  template:
+    metadata:
+      labels:
+        app: gestfarma-frontend
+    spec:
+      containers:
+        - name: frontend
+          image: gestfarma-frontend:latest
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 5173
+          envFrom:
+            - configMapRef:
+                name: gestfarma-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gestfarma-frontend
+spec:
+  type: NodePort
+  selector:
+    app: gestfarma-frontend
+  ports:
+    - protocol: TCP
+      port: 5173
+      targetPort: 5173
+      nodePort: 30000
