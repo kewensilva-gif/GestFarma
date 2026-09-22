@@ -43,6 +43,9 @@ class PersonControllerTest {
     private JwtService jwtService;
 
     @MockitoBean
+    private com.kewen.GerenciamentoFarmacia.security.TokenBlacklistService tokenBlacklistService;
+
+    @MockitoBean
     private CustomUserDetailsService customUserDetailsService;
 
     private Person person;

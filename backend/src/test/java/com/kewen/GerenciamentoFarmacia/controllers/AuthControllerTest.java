@@ -41,6 +41,9 @@ class AuthControllerTest {
     @MockitoBean
     private CustomUserDetailsService customUserDetailsService;
 
+    @MockitoBean
+    private com.kewen.GerenciamentoFarmacia.security.TokenBlacklistService tokenBlacklistService;
+
     // ======================== REGISTER ========================
 
     @Test
@@ -178,5 +181,14 @@ class AuthControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
                 .andExpect(status().isCreated());
+    }
+
+    // ======================== LOGOUT ========================
+
+    @Test
+    @DisplayName("POST /api/auth/logout - deve retornar 200 OK")
+    void logout_deveRetornarOk() throws Exception {
+        mockMvc.perform(post("/api/auth/logout"))
+                .andExpect(status().isOk());
     }
 }
