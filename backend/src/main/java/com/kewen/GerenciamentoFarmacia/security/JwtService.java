@@ -12,6 +12,7 @@ import javax.crypto.SecretKey;
 import java.time.Instant;
 import java.util.Date;
 import java.util.Map;
+import java.util.UUID;
 import java.util.function.Function;
 
 @Service
@@ -39,6 +40,7 @@ public class JwtService {
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
         Instant now = Instant.now();
         return Jwts.builder()
+                .id(UUID.randomUUID().toString())
                 .claims(extraClaims)
                 .subject(userDetails.getUsername())
                 .issuedAt(Date.from(now))
