@@ -6,4 +6,5 @@ data:
   DB_HOST: gestfarma-db
   DB_PORT: "5432"
   DB_NAME: farmacia
+  REDIS_HOST: gestfarma-redis
   VITE_API_BASE_URL: http://gestfarma-backend:8080
